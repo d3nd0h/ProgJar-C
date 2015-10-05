@@ -30,6 +30,7 @@ public class ClientImpl {
                 OutputStream os = socket.getOutputStream();
                 os.write(test.getBytes());
                 os.flush();
+                
                 while (true) {
                     byte[] buf = new byte[10];
                     int len = is.read(buf);
