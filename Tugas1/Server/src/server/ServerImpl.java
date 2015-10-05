@@ -22,25 +22,25 @@ public class ServerImpl {
         try {
             
             int port = 8888;
-            ServerSocket serversock = new ServerSocket(port);
-            System.out.println("Server started listening on " + port);
-            while (true) {
-                Socket socket = serversock.accept();
-                System.out.println("Client connected ...");
-                InputStream is = socket.getInputStream();
-                OutputStream os = socket.getOutputStream();
-
-                byte[] buf = new byte[1024]; 
-                int len = is.read(buf);
-                System.out.println("Client said: " + new String(buf));
-
-                os.write(buf);
-                os.flush();
-                os.close();
-                is.close();
-                socket.close();
+            try (ServerSocket serversock = new ServerSocket(port)) {
+                System.out.println("Server started listening on " + port);
+                while (true) {
+                    Socket socket = serversock.accept();
+                    System.out.println("Client connected ...");
+                    InputStream is = socket.getInputStream();
+                    OutputStream os = socket.getOutputStream();
+                    
+                    byte[] buf = new byte[1024];
+                    int len = is.read(buf);
+                    System.out.println("Client said: " + new String(buf));
+                    
+                    os.write(buf);
+                    os.flush();
+                    os.close();
+                    is.close();
+                    socket.close();
+                }
             }
-            serversock.close();
         } catch (IOException ex) {
             Logger.getLogger(ServerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
