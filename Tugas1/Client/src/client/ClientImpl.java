@@ -38,9 +38,7 @@ public class ClientImpl {
                     }
                     System.out.print(new String(buf));
                 }
-                byte[] buf = new byte[1024];
-                is.read(buf);
-                System.out.println(new String(buf));
+                
                 test = scanner.nextLine();
                 os.close();
                 is.close();
