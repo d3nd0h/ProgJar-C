@@ -9,7 +9,7 @@ Repositori ini merupakan repositori yang digunakan untuk mengerjakan tugas-tugas
 
 ## Tugas 1
 1. Implemented command : ls, cd, mkdir, pwd
-2. Command details:
+2. Command details:  
    2.1. ls (no args) -> display current folder  
    2.2. cd (path) -> move to destination $path, here $path is absolute path  
    2.3. mkdir (path) -> create a directory within current folder or a new folder somewhere else if absolute path was given  

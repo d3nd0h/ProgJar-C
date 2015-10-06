@@ -1,0 +1,1 @@
+ketika server mengambil request menggunakan model while(true) dan client juga mengimplementasikan model tersebut ketika menerima data, proses pertukaran data tidak selesai dengan sempurna yang menyebabkan komunikasi antara server dan client terhenti.
