@@ -19,9 +19,14 @@ import java.util.logging.Logger;
  * @author fendy
  */
 public class ServerImpl {
-    public void start(){
-        String cur_dir = new String("C:/Users/fendy/Desktop");
-        File dir = new File(cur_dir);
+    private String cur_dir;
+    
+    ServerImpl (String base_path) {
+        cur_dir = base_path;
+    }
+    
+    public void start() {
+        File dir = new File(this.cur_dir);
         
         try {
             int port = 8888;
@@ -78,9 +83,10 @@ public class ServerImpl {
                         }
                         else {
                             if (temp.length == 1) {
-                                int idx = cur_dir.lastIndexOf('/');
-                                cur_dir = cur_dir.substring(0,idx);
-                                dir = new File(cur_dir);
+                                int idx = this.cur_dir.lastIndexOf('/');
+                                this.cur_dir = this.cur_dir.substring(0,idx);
+                                dir = new File(this.cur_dir);
+                                System.out.println(this.cur_dir);
                             }
                             else {
                                 String args = temp[1].trim();
@@ -91,8 +97,8 @@ public class ServerImpl {
                                     respond = "Folder doesn\'t exists!\n";
                                 }
                                 else {
-                                    cur_dir = args;
-                                    dir = new File(cur_dir);
+                                    this.cur_dir = args;
+                                    dir = new File(this.cur_dir);
                                 }
                             }
                         }
@@ -113,7 +119,7 @@ public class ServerImpl {
                                 target_dir = new File(args);
                             }
                             else {
-                                target_dir = new File(cur_dir + '/' + args);
+                                target_dir = new File(this.cur_dir + '/' + args);
                             }
                             
                             boolean flag = true;
@@ -136,7 +142,7 @@ public class ServerImpl {
                             respond = "pwd takes no argument\n";
                         }
                         else {
-                            respond = cur_dir + '\n';
+                            respond = this.cur_dir + '\n';
                         }
                     }
                     else {

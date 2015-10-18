@@ -5,6 +5,14 @@
  */
 package server;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author fendy
@@ -16,8 +24,20 @@ public class Server {
      */
     public static void main(String[] args) {
         
-        ServerImpl server = new ServerImpl();
-        server.start();
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader("resources/config.json"));
+            JSONObject config = (JSONObject) obj;
+            
+            String base_path = (String) config.get("base_path");
+            
+            ServerImpl server = new ServerImpl(base_path);
+            server.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     

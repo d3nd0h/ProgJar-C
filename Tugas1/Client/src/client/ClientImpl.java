@@ -18,7 +18,8 @@ import java.util.logging.Logger;
  * @author fendy
  */
 public class ClientImpl {
-    public void start(){
+    
+    public void start() {
         try {
             
             Scanner scanner = new Scanner(System.in);
