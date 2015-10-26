@@ -90,15 +90,23 @@ public class ServerImpl {
                             }
                             else {
                                 String args = temp[1].trim();
-                                System.out.println("cd " + args);
-                                File target_dir = new File(args);
-                                if (!target_dir.isDirectory()) {
-                                    error = true;
-                                    respond = "Folder doesn\'t exists!\n";
-                                }
-                                else {
-                                    this.cur_dir = args;
+                                if (args.equals("..")) {
+                                    int idx = this.cur_dir.lastIndexOf('/');
+                                    this.cur_dir = this.cur_dir.substring(0,idx);
                                     dir = new File(this.cur_dir);
+                                    System.out.println(this.cur_dir);
+                                } else if (!args.equals(".")) {
+                                    args = this.cur_dir + '/' + args;
+                                    System.out.println("cd " + args);
+                                    File target_dir = new File(args);
+                                    if (!target_dir.isDirectory()) {
+                                        error = true;
+                                        respond = "Folder doesn\'t exists!\n";
+                                    }
+                                    else {
+                                        this.cur_dir = args;
+                                        dir = new File(this.cur_dir);
+                                    }
                                 }
                             }
                         }
