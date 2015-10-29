@@ -29,10 +29,10 @@ public class Server {
             Object obj = parser.parse(new FileReader("resources/config.json"));
             JSONObject config = (JSONObject) obj;
             
-            String base_path = (String) config.get("base_path");
+            String default_path = (String)config.get("default_path");
             int port = Integer.parseInt((String)config.get("port"));
             
-            ServerImpl server = new ServerImpl(base_path, port);
+            ServerImpl server = new ServerImpl(default_path, port);
             server.start();
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);

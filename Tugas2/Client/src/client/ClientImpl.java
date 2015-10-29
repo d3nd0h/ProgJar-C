@@ -22,29 +22,23 @@ public class ClientImpl {
     public void start() {
         try {
             
+            Socket socket = new Socket("localhost", 8888);
+            InputStream is = socket.getInputStream();
+            OutputStream os = socket.getOutputStream();
+            RecieverThread reciever = new RecieverThread(is);
+            Thread reciever_thread = new Thread(reciever);
+            reciever_thread.start();
+            
             Scanner scanner = new Scanner(System.in);
             String test = scanner.nextLine();
-            
             while (!test.contentEquals("exit")) {
-                Socket socket = new Socket("localhost", 8888);
-                InputStream is = socket.getInputStream();
-                OutputStream os = socket.getOutputStream();
                 os.write(test.getBytes());
                 os.flush();
-                
-                while (true) {
-                    byte[] buf = new byte[10];
-                    int len = is.read(buf);
-                    if(len == -1){
-                        break;
-                    }
-                    System.out.print(new String(buf));
-                }
-                
                 test = scanner.nextLine();
-                os.close();
-                is.close();
             }
+            
+            os.close();
+            is.close();
             
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
