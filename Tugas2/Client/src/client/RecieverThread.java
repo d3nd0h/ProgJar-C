@@ -24,13 +24,25 @@ public class RecieverThread implements Runnable{
     @Override
     public void run() {
         try {
-            while (true) {
-                byte[] buf = new byte[10];
-                int len = this.is.read(buf);
-                if(len == -1){
-                    break;
+            while(true) {
+                byte[] buf = new byte[1];
+                this.is.read(buf);
+                int flag = Integer.parseInt(new String(buf));
+                this.is.read(buf);
+
+                String response = new String();
+                while(!(new String(buf).equals("\n"))) {
+                    response += new String(buf);
+                    this.is.read(buf);
                 }
-                System.out.print(new String(buf));
+
+                int len = Integer.parseInt(response);
+                response = new String();
+                for(int i=0;i<len;i++){
+                    this.is.read(buf);
+                    response += new String(buf);
+                }
+                System.out.print(response);
             }
         } catch (IOException ex) {
             Logger.getLogger(RecieverThread.class.getName()).log(Level.SEVERE, null, ex);
