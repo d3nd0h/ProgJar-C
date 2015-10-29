@@ -32,6 +32,10 @@ public class ClientImpl {
             Scanner scanner = new Scanner(System.in);
             String test = scanner.nextLine();
             while (!test.contentEquals("exit")) {
+                String len = Integer.toString(test.length());
+                len += "\n";
+                os.write(len.getBytes());
+                os.flush();
                 os.write(test.getBytes());
                 os.flush();
                 test = scanner.nextLine();
