@@ -77,6 +77,10 @@ public class ClientThread implements Runnable{
                         CommandPWD pwd = new CommandPWD(request, this.cur_dir);
                         pwd.exec(this.os);
                         break;
+                    case "upload":
+                        CommandUPLOAD upload = new CommandUPLOAD(request, this.cur_dir);
+                        upload.exec(this.socket,this.os);
+                        break;
                     default:
                         String respond = "Error: command not found\n";
                         String len = Integer.toString(respond.length());
@@ -95,11 +99,13 @@ public class ClientThread implements Runnable{
             try {
                 this.os.close();
                 this.is.close();
-                this.socket.close();
+                //this.socket.close();
                 System.out.println("Client closed");
             } catch (IOException ex1) {
                 Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex1);
             }
+        } catch (Exception ex) {
+            Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
