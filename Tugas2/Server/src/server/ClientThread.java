@@ -81,6 +81,10 @@ public class ClientThread implements Runnable{
                         CommandUPLOAD upload = new CommandUPLOAD(request, this.cur_dir);
                         upload.exec(this.socket,this.os);
                         break;
+                    case "download":
+                        CommandDOWNLOAD download = new CommandDOWNLOAD(request, this.cur_dir);
+                        download.exec(this.os);
+                        break;
                     default:
                         String respond = "Error: command not found\n";
                         String len = Integer.toString(respond.length());
@@ -99,7 +103,7 @@ public class ClientThread implements Runnable{
             try {
                 this.os.close();
                 this.is.close();
-                //this.socket.close();
+                this.socket.close();
                 System.out.println("Client closed");
             } catch (IOException ex1) {
                 Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex1);

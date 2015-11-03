@@ -5,6 +5,8 @@
  */
 package client;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -37,12 +39,32 @@ public class RecieverThread implements Runnable{
                 }
 
                 int len = Integer.parseInt(response);
+                System.out.println(len);
                 response = new String();
                 for(int i=0;i<len;i++){
                     this.is.read(buf);
                     response += new String(buf);
                 }
-                System.out.print(response);
+                
+                if(flag == 1) {
+                    String filename = response;
+                    response = new String();
+                    this.is.read(buf);
+                    while(!(new String(buf).equals("\n"))) {
+                        response += new String(buf);
+                        this.is.read(buf);
+                    }
+                    
+                    buf = new byte[1024];
+                    long file_size = Long.parseLong(response);
+                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filename));
+                    long size_received = 0;
+                    while(size_received < file_size) {
+                        size_received += is.read(buf,0,buf.length);
+                        bos.write(buf);
+                    }
+                    bos.close();
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(RecieverThread.class.getName()).log(Level.SEVERE, null, ex);
