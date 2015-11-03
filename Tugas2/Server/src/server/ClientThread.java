@@ -73,6 +73,10 @@ public class ClientThread implements Runnable{
                         CommandMKDIR mkdir = new CommandMKDIR(request, this.cur_dir);
                         mkdir.exec(this.os);
                         break;
+                    case "touch":
+                        CommandTOUCH touch = new CommandTOUCH(request, this.cur_dir);
+                        touch.exec(this.os);
+                        break;
                     case "pwd":
                         CommandPWD pwd = new CommandPWD(request, this.cur_dir);
                         pwd.exec(this.os);
