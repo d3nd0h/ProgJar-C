@@ -32,28 +32,23 @@ public class CommandCD {
             respond = "too many arguments\n";
         }
         else {
-            if (temp.length == 1) {
-                int idx = this.cur_dir.lastIndexOf('/');
-                this.cur_dir = this.cur_dir.substring(0,idx);
-                dir = new File(this.cur_dir);
-            }
-            else {
-                String args = temp[1].trim();
-                if (args.equals("..")) {
-                    int idx = this.cur_dir.lastIndexOf('/');
-                    this.cur_dir = this.cur_dir.substring(0,idx);
+            String args = temp[1].trim();
+            if (args.equals("..") || temp.length == 1) {
+                int idx = this.cur_dir.lastIndexOf('/',this.cur_dir.lastIndexOf('/')-1);
+                if(idx != -1) {
+                    this.cur_dir = this.cur_dir.substring(0,idx+1);
                     dir = new File(this.cur_dir);
-                    System.out.println(this.cur_dir);
-                } else if (!args.equals(".")) {
-                    args = this.cur_dir + '/' + args;
-                    File target_dir = new File(args);
-                    if (!target_dir.isDirectory()) {
-                        error = true;
-                        respond = "Folder doesn\'t exists!\n";
-                    }
-                    else {
-                        this.cur_dir = args;
-                    }
+                }
+            } else if (!args.equals(".")) {
+                if(!args.contains(":/"))
+                    args = this.cur_dir + args + '/';
+                File target_dir = new File(args);
+                if (!target_dir.isDirectory()) {
+                    error = true;
+                    respond = "Folder doesn\'t exists!\n";
+                }
+                else {
+                    this.cur_dir = args;
                 }
             }
         }
